@@ -1,25 +1,45 @@
 package com.bussinesslogic.session;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
-import javax.inject.Inject;
 
 import com.shopping.products.Product;
 import com.shopping.users.User;
+
+/* 
+ * Another way without implementing the interfaces would be to add annotations
+ * @Remote({buysellRemote.class})
+ * @Local({buysellLocal.class})
+ */
+
+
 
 @Stateful
 @LocalBean
 public class buysell implements buysellRemote, buysellLocal
 {
 
-   @Inject
-   User usr;
+   
+   User user;
+   List<Product> list=new ArrayList<>();;
+   
+   
+   
+   public User getUser()
+   {
+      return user;
+   }
+
+   public List<Product> getList()
+   {
+      return list;
+   }
 
    public buysell()
    {
-
-      usr.setId(9);
-      usr.setName("name");
 
    }
 
@@ -31,22 +51,20 @@ public class buysell implements buysellRemote, buysellLocal
 
    private void work()
    {
-      System.out.println(usr.getName());
+      System.out.println(user.getName());
 
    }
 
    @Override
    public void initialize(User user)
    {
-      // TODO Auto-generated method stub
-      
+     this.user=user;
    }
 
    @Override
    public void add(Product product)
    {
-      // TODO Auto-generated method stub
-      
+      list.add(product);
    }
 
 }
